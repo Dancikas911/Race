@@ -64,7 +64,7 @@ public class NPCCollision : MonoBehaviour
 
     IEnumerator ReturnToStartPosition()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(4);
 
         transform.position = initialPosition;
 
