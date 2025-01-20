@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerCollision : MonoBehaviour
 {
     public AudioClip explosionSound;  // Garso efektas, kai įvyksta susidūrimas
     public TextMeshProUGUI timerText;  // TMP tekstas laikmačiui atvaizduoti
+    public GameObject restartButton;  // Restart mygtukas UI
+    public TextMeshProUGUI gameOverText;  // TMP tekstas Game Over pranešimui
 
     private float timeElapsed;
     private float bestTime = 0f;  // Geriausias laikas
@@ -12,16 +15,17 @@ public class PlayerCollision : MonoBehaviour
 
     private void Start()
     {
-        // Patikriname, ar timerText yra priskirtas
-        if (timerText == null)
+        if (timerText == null || restartButton == null || gameOverText == null)
         {
-            Debug.LogError("TimerText is not assigned in the inspector!");
+            Debug.LogError("UI elements are not assigned in the inspector!");
         }
         else
         {
             // Panaudojame PlayerPrefs, kad įkeltume geriausią laiką iš išsaugotų duomenų
             bestTime = PlayerPrefs.GetFloat("BestTime", 0f); // Jei nėra reikšmės, naudosime 0 kaip numatytąją reikšmę
             timerText.text = "Time: 0:00\nBest Time: " + FormatTime(bestTime);  // Inicializuojame tekstą
+            restartButton.SetActive(false);  // Paslėpiame Restart mygtuką, kol žaidimas nevyksta
+            gameOverText.gameObject.SetActive(false);  // Paslėpiame Game Over tekstą
         }
     }
 
@@ -67,10 +71,17 @@ public class PlayerCollision : MonoBehaviour
                 PlayerPrefs.Save();  // Užtikriname, kad duomenys bus išsaugoti
             }
 
-            // Reset TMP tekstas
-            if (timerText != null)
+            // Rodome Game Over pranešimą
+            if (gameOverText != null)
             {
-                timerText.text = "Time: 0:00\nBest Time: " + FormatTime(bestTime);
+                gameOverText.gameObject.SetActive(true);  // Parodome Game Over tekstą
+                gameOverText.text = "Game Over\nTime: " + FormatTime(timeElapsed);
+            }
+
+            // Rodome Restart mygtuką
+            if (restartButton != null)
+            {
+                restartButton.SetActive(true);  // Parodome Restart mygtuką
             }
 
             // Garso efektas
@@ -78,22 +89,14 @@ public class PlayerCollision : MonoBehaviour
             {
                 AudioSource.PlayClipAtPoint(explosionSound, transform.position);
             }
-
-            // Po 2 sekundžių įvyksta žaidimo pabaiga
-            Invoke("GameOver", 2f);
         }
     }
 
-    void GameOver()
+    public void RestartGame()
     {
-        Debug.Log("GameOver function called, reloading scene...");
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-    }
+        Debug.Log("Restarting Game...");
 
-    // Šis metodas gali būti naudojamas, kad būtų galima atnaujinti laikmatį ir geriausią laiką po to, kai žaidimas prasideda iš naujo
-    public void ResetTimer()
-    {
-        timeElapsed = 0f;  // Atstatome laikmatį į 0
-        isRunning = true;  // Pradeda vėl veikti laikmatis
+        // Naudokite scenos pavadinimą vietoj build index
+        SceneManager.LoadScene("Pursuit");  // Pakeiskite į savo pagrindinę sceną, kuri turi žaidimo logiką
     }
 }
