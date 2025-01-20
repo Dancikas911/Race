@@ -4,8 +4,8 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - explosionEffect: {instanceID: 0}
-  - explosionSound: {fileID: 8300000, guid: 0295b9197edff084d92351696414c5fe, type: 3}
+  - explosionSound: {fileID: 8300000, guid: 87ab01f456dd49a45aa73fcbcb85a414, type: 3}
+  - timerText: {fileID: 7486887110142313442, guid: b1d1cd59315e52d43840939c49e49be1, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
