@@ -54,37 +54,33 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision detected with: " + collision.collider.name);
-        if (collision.collider != null)  // Patikrinama, ar Collider egzistuoja
+        if (collision.collider != null)
         {
-            Debug.Log("Collision detected with Collider2D");
             gameObject.SetActive(false);  // Paslėpti žaidėjo objektą
-
-            // Sustabdykite laikmatį
-            isRunning = false;
+            isRunning = false;  // Sustabdyti laikmatį
 
             // Atnaujinti geriausią laiką
             if (timeElapsed > bestTime)
             {
-                bestTime = timeElapsed;  // Atnaujiname geriausią laiką
-                PlayerPrefs.SetFloat("BestTime", bestTime);  // Išsaugome geriausią laiką PlayerPrefs
-                PlayerPrefs.Save();  // Užtikriname, kad duomenys bus išsaugoti
+                bestTime = timeElapsed;
+                PlayerPrefs.SetFloat("BestTime", bestTime);
+                PlayerPrefs.Save();
             }
 
-            // Rodome Game Over pranešimą
+            // Parodyti Game Over tekstą
             if (gameOverText != null)
             {
-                gameOverText.gameObject.SetActive(true);  // Parodome Game Over tekstą
+                gameOverText.gameObject.SetActive(true);
                 gameOverText.text = "Game Over\nTime: " + FormatTime(timeElapsed);
             }
 
-            // Rodome Restart mygtuką
+            // Parodyti Restart mygtuką
             if (restartButton != null)
             {
-                restartButton.SetActive(true);  // Parodome Restart mygtuką
+                restartButton.SetActive(true);
             }
 
-            // Garso efektas
+            // Groti garsą
             if (explosionSound != null)
             {
                 AudioSource.PlayClipAtPoint(explosionSound, transform.position);
@@ -97,6 +93,6 @@ public class PlayerCollision : MonoBehaviour
         Debug.Log("Restarting Game...");
 
         // Naudokite scenos pavadinimą vietoj build index
-        SceneManager.LoadScene("Pursuit");  // Pakeiskite į savo pagrindinę sceną, kuri turi žaidimo logiką
+        SceneManager.LoadScene("MainMenu");  // Pakeiskite į savo pagrindinę sceną, kuri turi žaidimo logiką
     }
 }
