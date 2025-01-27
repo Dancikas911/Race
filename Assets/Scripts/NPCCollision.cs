@@ -25,6 +25,17 @@ public class NPCCollision : MonoBehaviour
         {
             Debug.LogError("AudioSource komponentas nepriskirtas!");
         }
+
+        // Išjungiam garsą ir daleles starto metu
+        if (collisionEffect != null)
+        {
+            collisionEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+
+        if (audioSource != null)
+        {
+            audioSource.Stop(); // Sustabdyti garso atkūrimą
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -33,11 +44,14 @@ public class NPCCollision : MonoBehaviour
         {
             StopObjectMovement();
 
+            // Paleidžiame dalelių sistemą
             if (collisionEffect != null)
             {
+                collisionEffect.gameObject.SetActive(true); // Įjungiamas dalelių objektas
                 collisionEffect.Play();
             }
 
+            // Paleidžiame garsą
             if (audioSource != null && explosionSound != null)
             {
                 audioSource.PlayOneShot(explosionSound);
