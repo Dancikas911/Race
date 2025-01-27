@@ -5,7 +5,7 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    public TextMeshProUGUI timerText;  // TMP tekstas, kuriame rodysime tiek laiką, tiek geriausią laiką
+    public TextMeshProUGUI timerText;  
 
     private float startTime;
     private float bestTime = 0f;
@@ -14,7 +14,7 @@ public class Timer : MonoBehaviour
     void Start()
     {
         startTime = Time.time;
-        UpdateTimerText(0f, bestTime);  // Inicializuoti tekstą su pradiniais laikais
+        UpdateTimerText(0f, bestTime); 
     }
 
     void Update()
@@ -22,7 +22,7 @@ public class Timer : MonoBehaviour
         if (isRunning)
         {
             float t = Time.time - startTime;
-            UpdateTimerText(t, bestTime);  // Atnaujinti tekstą kiekvieną kadrą
+            UpdateTimerText(t, bestTime);  
         }
     }
 
@@ -34,7 +34,7 @@ public class Timer : MonoBehaviour
         string bestMinutes = ((int)bestTime / 60).ToString();
         string bestSeconds = (bestTime % 60).ToString("f2");
 
-        // Rodo laiką ir geriausią laiką su tekstais
+        
         timerText.text = "Time: " + currentMinutes + ":" + currentSeconds + "\n" +
                          "Best Time: " + bestMinutes + ":" + bestSeconds;
     }
@@ -45,10 +45,10 @@ public class Timer : MonoBehaviour
         if (currentTime > bestTime)
         {
             bestTime = currentTime;
-            UpdateTimerText(currentTime, bestTime);  // Atnaujina tekstą su nauju geriausiu laiku
+            UpdateTimerText(currentTime, bestTime);  
         }
 
-        startTime = Time.time;  // Resetuoja laikmatį
+        startTime = Time.time;  
     }
 
     public void StopTimer()
@@ -58,7 +58,7 @@ public class Timer : MonoBehaviour
         if (currentTime > bestTime)
         {
             bestTime = currentTime;
-            UpdateTimerText(currentTime, bestTime);  // Atnaujina tekstą su nauju geriausiu laiku
+            UpdateTimerText(currentTime, bestTime); 
         }
     }
 }

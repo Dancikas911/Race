@@ -9,7 +9,7 @@ public class NPCCollision : MonoBehaviour
     private AudioSource audioSource;
     private Vector3 initialPosition;
     private Rigidbody2D rb;
-    private NPCFollow npcFollow;  // Nuoroda į sekimo skriptą
+    private NPCFollow npcFollow;  
     private bool isStopped = false;
 
     void Start()
@@ -17,7 +17,7 @@ public class NPCCollision : MonoBehaviour
         initialPosition = transform.position;
         rb = GetComponent<Rigidbody2D>();
 
-        // Randame sekimo skriptą objekte
+     
         npcFollow = GetComponent<NPCFollow>();
 
         audioSource = GetComponent<AudioSource>();
@@ -26,7 +26,7 @@ public class NPCCollision : MonoBehaviour
             Debug.LogError("AudioSource komponentas nepriskirtas!");
         }
 
-        // Išjungiam garsą ir daleles starto metu
+        
         if (collisionEffect != null)
         {
             collisionEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
@@ -34,7 +34,7 @@ public class NPCCollision : MonoBehaviour
 
         if (audioSource != null)
         {
-            audioSource.Stop(); // Sustabdyti garso atkūrimą
+            audioSource.Stop(); 
         }
     }
 
@@ -44,14 +44,14 @@ public class NPCCollision : MonoBehaviour
         {
             StopObjectMovement();
 
-            // Paleidžiame dalelių sistemą
+            
             if (collisionEffect != null)
             {
-                collisionEffect.gameObject.SetActive(true); // Įjungiamas dalelių objektas
+                collisionEffect.gameObject.SetActive(true); 
                 collisionEffect.Play();
             }
 
-            // Paleidžiame garsą
+           
             if (audioSource != null && explosionSound != null)
             {
                 audioSource.PlayOneShot(explosionSound);
@@ -69,7 +69,7 @@ public class NPCCollision : MonoBehaviour
         rb.simulated = false;
         isStopped = true;
 
-        // Sustabdome sekimą
+        
         if (npcFollow != null)
         {
             npcFollow.StopFollowing();
@@ -86,7 +86,7 @@ public class NPCCollision : MonoBehaviour
         rb.simulated = true;
         isStopped = false;
 
-        // Pradedame sekimą iš naujo
+        
         if (npcFollow != null)
         {
             npcFollow.StartFollowing();
